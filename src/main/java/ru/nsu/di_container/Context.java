@@ -1,11 +1,14 @@
 package ru.nsu.di_container;
 
 import ru.nsu.di_container.beans.BeanStore;
+import ru.nsu.di_container.scanner.Scanner;
 
 public class Context {
     private final BeanStore beanStore;
+    private final Scanner scanner;
 
-    public Context() {
+    public Context(Scanner scanner) {
+        this.scanner = new Scanner("ru.nsu.di_container");
         beanStore = new BeanStore();
     }
 
