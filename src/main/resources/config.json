@@ -1,0 +1,33 @@
+[
+  {
+    "id": "Snake#1",
+    "className": "ru.nsu.di_container.cases.Snake",
+    "scope": "Singleton",
+    "constructorArgs": [
+      {
+        "value": "Snake#1"
+      },
+      {
+        "value": 5
+      }
+    ]
+  },
+  {
+    "className": "ru.nsu.di_container.cases.Snake",
+    "scope": "Prototype",
+    "constructorArgs": [
+      {
+        "className": "String",
+        "value": "Snake##"
+      },
+      {
+        "className": "Integer",
+        "value": 0
+      },
+      {
+        "className": "ru.nsu.di_container.cases.Snake",
+        "ref": "Snake#1"
+      }
+    ]
+  }
+]

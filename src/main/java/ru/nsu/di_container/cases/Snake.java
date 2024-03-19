@@ -36,3 +36,4 @@ public class Snake {
         this.length = length;
     }
 }
+
