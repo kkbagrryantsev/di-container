@@ -5,9 +5,11 @@
     "scope": "Singleton",
     "constructorArgs": [
       {
+        "className": "java.lang.String",
         "value": "Snake#1"
       },
       {
+        "className": "java.lang.Integer",
         "value": 5
       }
     ]
@@ -15,19 +17,19 @@
   {
     "className": "ru.nsu.di_container.cases.Snake",
     "scope": "Prototype",
-    "isLazy": false,
+    "isLazy": true,
     "constructorArgs": [
       {
-        "className": "String",
+        "className": "java.lang.String",
         "value": "Snake##"
       },
       {
-        "className": "Integer",
-        "value": 0
+        "className": "java.lang.Integer",
+        "value": 5
       },
       {
         "className": "ru.nsu.di_container.cases.Snake",
-        "ref": "Snake#1"
+        "id": "Snake#1"
       }
     ]
   }
