@@ -2,41 +2,37 @@ package ru.nsu.di_container.beans;
 
 import ru.nsu.di_container.annotations.BeanScope;
 
-import java.util.List;
+import java.util.Map;
 
 public class Bean {
-    private String id;
-    private Class<?> clazz;
-    private Object instance;
+    private String name;
+    private Class<?> valueClass;
+    private Object value;
     private BeanScope scope;
-    private List<ConstructorArg> constructorArgs;
-    private boolean isLazy;
+    private Map<String, Object> fieldValues;
 
     public Bean() {
     }
 
-    public String getId() {
-        return id;
+    @Override
+    public String toString() {
+        return String.format("Bean@%h of %s", this.hashCode(), this.valueClass.getName());
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getName() {
+        return name;
     }
 
-    public Class<?> getBeanClass() {
-        return clazz;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setBeanClass(Class<?> clazz) {
-        this.clazz = clazz;
+    public Object getValue() {
+        return value;
     }
 
-    public Object getInstance() {
-        return instance;
-    }
-
-    public void setInstance(Object instance) {
-        this.instance = instance;
+    public void setValue(Object value) {
+        this.value = value;
     }
 
     public BeanScope getScope() {
@@ -47,24 +43,19 @@ public class Bean {
         this.scope = scope;
     }
 
-    public boolean isLazy() {
-        return isLazy;
+    public Map<String, Object> getFieldValues() {
+        return fieldValues;
     }
 
-    public void setLazy(boolean lazy) {
-        isLazy = lazy;
+    public void setFieldValues(Map<String, Object> fieldValues) {
+        this.fieldValues = fieldValues;
     }
 
-    public List<ConstructorArg> getConstructorArgs() {
-        return constructorArgs;
+    public Class<?> getValueClass() {
+        return valueClass;
     }
 
-    public void setConstructorArgs(List<ConstructorArg> constructorArgs) {
-        this.constructorArgs = constructorArgs;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Bean@%h of %s", this.hashCode(), this.clazz.getName());
+    public void setValueClass(Class<?> valueClass) {
+        this.valueClass = valueClass;
     }
 }

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Rattlesnake",
+    "valueClass": "ru.nsu.di_container.snakes.Snake",
+    "scope": "Singleton",
+    "fields": [
+      {
+        "name": "snakeName",
+        "value": "Eugene"
+      },
+      {
+        "name": "length",
+        "value": 5
+      }
+    ],
+    "commentedOut": [
+      {
+        "name": "snake",
+        "refName": "Snake#2"
+      },
+      {
+        "name": "snake",
+        "refClass": "ru.nsu.di_container.snakes.Snake"
+      }
+    ]
+  },
+  {
+    "valueClass": "ru.nsu.di_container.snakes.Terrarium",
+    "scope": "Singleton",
+    "fields": [
+      {
+        "name": "glassThickness",
+        "value": 2
+      }
+    ]
+  }
+]
