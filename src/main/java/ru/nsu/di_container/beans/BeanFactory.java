@@ -1,43 +1,91 @@
 package ru.nsu.di_container.beans;
 
-import ru.nsu.di_container.annotations.BeanScope;
+import ru.nsu.di_container.Context;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class BeanFactory {
-    private BeanStore beanStore;
-    public BeanFactory(BeanStore beanStore){
-        this.beanStore = beanStore;
+    Context context;
+
+    public BeanFactory(Context context) {
+        this.context = context;
     }
-    public Object createInstance(Bean bean){
-        Object instance = null;
-        Class<?> clazz = bean.getValueClass();
+
+    public Object createAndSetBeanValue(Bean bean) {
+        Object value = createProxy(bean);
+        setBeanValue(bean, value);
+        return bean.getValue();
+    }
+
+    public Object createImplementationClassInstance(Bean bean) {
+        Class<?> clazz = bean.getImplementationClass();
         try {
-            instance = clazz.getDeclaredConstructor().newInstance();
+            Object instance = clazz.getDeclaredConstructor().newInstance();
             for (Map.Entry<String, Object> entry : bean.getFieldValues().entrySet()) {
                 String fieldName = entry.getKey();
                 Object value = entry.getValue();
-                Field field = clazz.getDeclaredField(fieldName);
-                field.setAccessible(true);
-                if (value instanceof Bean){
-                    value = this.createInstance((Bean) value);
+
+                if (value instanceof Bean) {
+                    value = createAndSetBeanValue((Bean) value);
                 }
-                field.set(instance, value);
+
+                Field field = clazz.getDeclaredField(fieldName);
+
+                boolean canAccess = field.canAccess(instance);
+                try {
+                    field.setAccessible(true);
+                    field.set(instance, value);
+                } finally {
+                    field.setAccessible(canAccess);
+                }
             }
-        } catch (InstantiationException | IllegalAccessException  |
-                 NoSuchMethodException | InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
+            return clazz.cast(instance);
+        } catch (InstantiationException
+                 | IllegalAccessException
+                 | NoSuchMethodException
+                 | InvocationTargetException
+                 | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
-        if (bean.getScope() == BeanScope.SINGLETON){
-            bean.setValue(instance);
+    }
+
+    private Object createProxy(Bean bean) {
+        Class<?> interfaceClass = bean.getInterfaceClass();
+        return interfaceClass.cast(Proxy.newProxyInstance(
+                interfaceClass.getClassLoader(),
+                new Class<?>[]{interfaceClass},
+                new InvocationHandler() {
+                    final Supplier<Object> createBeanValueInstance = () -> createImplementationClassInstance(bean);
+                    Object instance = null;
+
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        if (instance == null) {
+                            instance = createBeanValueInstance.get();
+                        }
+                        return method.invoke(instance, args);
+                    }
+                }
+        ));
+    }
+
+    private void setBeanValue(Bean bean, Object value) {
+        switch (bean.getScope()) {
+            case SINGLETON -> bean.setValue(value);
+            case THREAD -> {
+                //noinspection unchecked
+                ThreadLocal<Object> threadLocalBeanValue = (ThreadLocal<Object>) bean.getValue();
+                threadLocalBeanValue.set(value);
+            }
+            case PROTOTYPE -> {
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + bean.getScope());
         }
-        if (bean.getScope() == BeanScope.THREAD){
-            ((ThreadLocal) bean.getValue()).set(instance);
-        }
-        return clazz.cast(instance);
     }
 }

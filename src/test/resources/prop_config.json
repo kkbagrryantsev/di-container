@@ -1,7 +1,8 @@
 [
   {
     "name": "Rattlesnake",
-    "valueClass": "ru.nsu.di_container.snakes.Snake",
+    "interfaceClass": "ru.nsu.di_container.snakes.Reptile",
+    "implementationClass": "ru.nsu.di_container.snakes.Snake",
     "scope": "Singleton",
     "fields": [
       {
@@ -25,7 +26,8 @@
     ]
   },
   {
-    "valueClass": "ru.nsu.di_container.snakes.Terrarium",
+    "interfaceClass": "ru.nsu.di_container.snakes.Terrarium",
+    "implementationClass": "ru.nsu.di_container.snakes.ReptileTerrarium",
     "scope": "Singleton",
     "fields": [
       {

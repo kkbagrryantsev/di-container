@@ -6,7 +6,8 @@ import java.util.Map;
 
 public class Bean {
     private String name;
-    private Class<?> valueClass;
+    private Class<?> interfaceClass;
+    private Class<?> implementationClass;
     private Object value;
     private BeanScope scope;
     private Map<String, Object> fieldValues;
@@ -16,7 +17,7 @@ public class Bean {
 
     @Override
     public String toString() {
-        return String.format("Bean@%h of %s", this.hashCode(), this.valueClass.getName());
+        return String.format("Bean@%h of %s", this.hashCode(), this.implementationClass.getName());
     }
 
     public String getName() {
@@ -51,11 +52,19 @@ public class Bean {
         this.fieldValues = fieldValues;
     }
 
-    public Class<?> getValueClass() {
-        return valueClass;
+    public Class<?> getImplementationClass() {
+        return implementationClass;
     }
 
-    public void setValueClass(Class<?> valueClass) {
-        this.valueClass = valueClass;
+    public void setImplementationClass(Class<?> implementationClass) {
+        this.implementationClass = implementationClass;
+    }
+
+    public Class<?> getInterfaceClass() {
+        return interfaceClass;
+    }
+
+    public void setInterfaceClass(Class<?> interfaceClass) {
+        this.interfaceClass = interfaceClass;
     }
 }

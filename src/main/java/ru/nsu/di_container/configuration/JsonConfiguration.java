@@ -23,9 +23,17 @@ public class JsonConfiguration implements Configuration {
         return BeanScope.fromString((String) scopeName);
     }
 
-    private static Class<?> deserializeValueClass(Object valueClassPath) {
+    private static Class<?> deserializeImplementationClass(Object implementationClassPath) {
         try {
-            return Class.forName((String) valueClassPath);
+            return Class.forName((String) implementationClassPath);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Class<?> deserializeInterfaceClass(Object interfaceClassPath) {
+        try {
+            return Class.forName((String) interfaceClassPath);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -93,12 +101,15 @@ public class JsonConfiguration implements Configuration {
 
         bean.setName(deserializeName(serializedBean.get("name")));
 
-        Class<?> valueClass = deserializeValueClass(serializedBean.get("valueClass"));
-        bean.setValueClass(valueClass);
+        Class<?> implementationClass = deserializeImplementationClass(serializedBean.get("implementationClass"));
+        bean.setImplementationClass(implementationClass);
+
+        Class<?> interfaceClass = deserializeInterfaceClass(serializedBean.get("interfaceClass"));
+        bean.setInterfaceClass(interfaceClass);
 
         Map<String, Object> fieldValues = deserializeFieldValues(serializedBean.get("fields"));
-        if (!validateFields(fieldValues, valueClass)) {
-            throw new IllegalStateException(String.format("Provided fields does not exist on class %s", valueClass.getName()));
+        if (!validateFields(fieldValues, implementationClass)) {
+            throw new IllegalStateException(String.format("Provided fields does not exist on class %s", implementationClass.getName()));
         }
         bean.setFieldValues(fieldValues);
         return bean;
@@ -106,7 +117,7 @@ public class JsonConfiguration implements Configuration {
 
     private static void connectBeans(List<Bean> beans) {
         for (Bean bean : beans) {
-            Class<?> valueClass = bean.getValueClass();
+            Class<?> valueClass = bean.getImplementationClass();
 
             // Replace bean references with their instances
             Map<String, Object> fieldValues = bean.getFieldValues();
@@ -155,7 +166,7 @@ public class JsonConfiguration implements Configuration {
 
     private static Bean findInjectableBean(Class<?> valueClass, List<Bean> beans) {
         for (Bean bean : beans) {
-            if (bean.getValueClass().equals(valueClass)) {
+            if (valueClass.isAssignableFrom(bean.getImplementationClass())) {
                 return bean;
             }
         }
