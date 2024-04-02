@@ -89,5 +89,11 @@
     "implementationClass": "ru.nsu.di_container.classes.ClassWithInject",
     "scope": "Prototype",
     "fields": []
+  },
+  {
+    "interfaceClass": "ru.nsu.di_container.classes.ClassWithNamedInterface",
+    "implementationClass": "ru.nsu.di_container.classes.ClassWithNamed",
+    "scope": "Singleton",
+    "fields": []
   }
 ]
