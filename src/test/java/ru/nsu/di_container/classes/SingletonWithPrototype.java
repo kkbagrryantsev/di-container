@@ -10,4 +10,8 @@ public class SingletonWithPrototype implements SingletonWithPrototypeInterface {
     public PrototypeInterface getObj(){
         return this.obj;
     }
+    @Override
+    public void otherAction(){
+
+    }
 }

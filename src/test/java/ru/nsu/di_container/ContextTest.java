@@ -31,14 +31,26 @@ public class ContextTest {
 
     @Test
     @DisplayName("Prototype within singleton")
-    void prototypeWithinSingleton() throws IOException {
+    void prototypeWithinSingletonTest() throws IOException {
         Context context = new Context("src/test/resources/prop_config.json");
         SingletonWithPrototypeInterface sngltn = context.getBean(SingletonWithPrototype.class);
         sngltn.someAction();
-        PrototypeInterface prot1 = sngltn.getObj();
+        Integer prot1hash = sngltn.getObj().hashCode();
         sngltn.someAction();
-        PrototypeInterface prot2 = sngltn.getObj();
-        assert prot1 != prot2;
+        Integer prot2hash = sngltn.getObj().hashCode();
+        sngltn.otherAction();
+        Integer prot3hash = sngltn.getObj().hashCode();
+
+        assert !prot1hash.equals(prot2hash);
+        assert prot2hash.equals(prot3hash);
+    }
+
+    @Test
+    @DisplayName("Test inject annotation")
+    void injectTest() throws IOException {
+        Context context = new Context("src/test/resources/prop_config.json");
+        context.getBean(ClassWithInject.class).getDependency();
+        //assert context.getBean(ClassWithInject.class).getDependency()==null;
     }
 
 

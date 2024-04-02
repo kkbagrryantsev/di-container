@@ -83,5 +83,11 @@
     "implementationClass": "ru.nsu.di_container.classes.PrototypeClass",
     "scope": "Prototype",
     "fields": []
+  },
+  {
+    "interfaceClass": "ru.nsu.di_container.classes.ClassWithInjectInterface",
+    "implementationClass": "ru.nsu.di_container.classes.ClassWithInject",
+    "scope": "Prototype",
+    "fields": []
   }
 ]
