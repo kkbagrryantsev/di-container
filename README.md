@@ -24,8 +24,9 @@ It is optional to reference other beans in the config. You can use `javax` `@Inj
 The container will correctly recognize them and perform dependency injection.
 
 By default `Prototype`-scoped beans will inherit the bigger scope when injected into some other bean.
-To avoid that and control the behavior of the bean value you may specify some null lookup method and annotate it with `@Lookup`.
+To avoid that and control the behavior of the bean value you may specify some null lookup method within a prototype bean class and annotate it with `@Lookup`.
 Each time this method is called the actual prototype instance will be replaced with a new one automatically.
+
 
 **Bean params** \
 `name` (*optional*): Name of the bean as it will appear in the context \
