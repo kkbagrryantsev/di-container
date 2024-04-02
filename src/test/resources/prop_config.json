@@ -60,5 +60,28 @@
         "value": 2
       }
     ]
+  },
+  {
+    "interfaceClass": "ru.nsu.di_container.classes.SomeInterface",
+    "implementationClass": "ru.nsu.di_container.classes.SomeClass",
+    "scope": "Prototype",
+    "fields": []
+  },
+  {
+    "interfaceClass": "ru.nsu.di_container.classes.SingletonWithPrototypeInterface",
+    "implementationClass": "ru.nsu.di_container.classes.SingletonWithPrototype",
+    "scope": "Singleton",
+    "fields": [
+      {
+        "name": "obj",
+        "refClass": "ru.nsu.di_container.classes.PrototypeInterface"
+      }
+    ]
+  },
+  {
+    "interfaceClass": "ru.nsu.di_container.classes.PrototypeInterface",
+    "implementationClass": "ru.nsu.di_container.classes.PrototypeClass",
+    "scope": "Prototype",
+    "fields": []
   }
 ]
