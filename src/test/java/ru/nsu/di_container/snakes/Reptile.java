@@ -3,7 +3,7 @@ package ru.nsu.di_container.snakes;
 public interface Reptile {
     Terrarium getTerrarium();
 
-    String getSnakeName();
+    String getName();
 
     Integer getLength();
 

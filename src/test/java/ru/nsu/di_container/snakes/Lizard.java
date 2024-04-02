@@ -2,11 +2,11 @@ package ru.nsu.di_container.snakes;
 
 import javax.inject.Inject;
 
-public class Snake implements Reptile {
-    @Inject
-    private Terrarium terrarium;
+public class Lizard implements Reptile {
     private String name;
     private Integer length;
+    @Inject
+    private Terrarium terrarium;
 
     @Override
     public Terrarium getTerrarium() {

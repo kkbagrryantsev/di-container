@@ -43,12 +43,13 @@ public class Context {
 
     private <T> T getPrototypeBeanInstance(Bean bean) {
         //noinspection unchecked
-        return (T) beanFactory.createAndSetBeanValue(bean);
+        return (T) beanFactory.createBeanValue(bean);
     }
 
     private <T> T getSingletonBeanInstance(Bean bean) {
         if (bean.getValue() == null) {
-            beanFactory.createAndSetBeanValue(bean);
+            Object value = beanFactory.createBeanValue(bean);
+            bean.setValue(value);
         }
         //noinspection unchecked
         return (T) bean.getValue();
@@ -56,15 +57,11 @@ public class Context {
 
     private <T> T getThreadBeanInstance(Bean bean) {
         if (bean.getValue() == null) {
-            bean.setValue(new ThreadLocal<>());
+            Object object = beanFactory.createBeanValue(bean);
+            bean.setValue(object);
         }
         //noinspection unchecked
-        ThreadLocal<Object> threadLocalBeanValue = (ThreadLocal<Object>) bean.getValue();
-        if (threadLocalBeanValue.get() == null) {
-            beanFactory.createAndSetBeanValue(bean);
-        }
-        //noinspection unchecked
-        return (T) threadLocalBeanValue.get();
+        return (T) bean.getValue();
     }
 
     public <T> T getInstance(Bean bean) {

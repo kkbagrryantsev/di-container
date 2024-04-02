@@ -1,11 +1,12 @@
 [
   {
     "name": "Rattlesnake",
-    "valueClass": "ru.nsu.di_container.snakes.Snake",
+    "interfaceClass": "ru.nsu.di_container.snakes.Reptile",
+    "implementationClass": "ru.nsu.di_container.snakes.Snake",
     "scope": "Singleton",
     "fields": [
       {
-        "name": "snakeName",
+        "name": "name",
         "value": "Eugene"
       },
       {
@@ -25,7 +26,8 @@
     ]
   },
   {
-    "valueClass": "ru.nsu.di_container.snakes.Terrarium",
+    "interfaceClass": "ru.nsu.di_container.snakes.Terrarium",
+    "implementationClass": "ru.nsu.di_container.snakes.ReptileTerrarium",
     "scope": "Singleton",
     "fields": [
       {
@@ -36,7 +38,8 @@
   },
   {
     "name": "sharedObject",
-    "valueClass": "ru.nsu.di_container.threads.SharedObject",
+    "interfaceClass": "ru.nsu.di_container.threads.SharedObject",
+    "implementationClass": "ru.nsu.di_container.threads.SharedObjectSample",
     "scope": "Thread",
     "fields": []
   }

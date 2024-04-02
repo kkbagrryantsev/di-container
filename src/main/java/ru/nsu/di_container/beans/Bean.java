@@ -29,11 +29,32 @@ public class Bean {
     }
 
     public Object getValue() {
-        return value;
+        //noinspection SwitchStatementWithTooFewBranches
+        switch (scope) {
+            case THREAD -> {
+                if (value == null) {
+                    return null;
+                }
+                return ((ThreadLocal<?>) value).get();
+            }
+            default -> {
+                return value;
+            }
+        }
     }
 
     public void setValue(Object value) {
-        this.value = value;
+        //noinspection SwitchStatementWithTooFewBranches
+        switch (scope) {
+            case THREAD -> {
+                if (this.value == null) {
+                    this.value = new ThreadLocal<>();
+                }
+                //noinspection unchecked
+                ((ThreadLocal<Object>) this.value).set(value);
+            }
+            default -> this.value = value;
+        }
     }
 
     public BeanScope getScope() {
@@ -66,5 +87,15 @@ public class Bean {
 
     public void setInterfaceClass(Class<?> interfaceClass) {
         this.interfaceClass = interfaceClass;
+    }
+
+    public boolean valueIsEmpty() {
+        if (value == null) {
+            return true;
+        }
+        if (scope == BeanScope.THREAD) {
+            return ((ThreadLocal<?>) value).get() == null;
+        }
+        return false;
     }
 }

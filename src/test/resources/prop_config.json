@@ -6,12 +6,37 @@
     "scope": "Singleton",
     "fields": [
       {
-        "name": "snakeName",
+        "name": "name",
         "value": "Eugene"
       },
       {
         "name": "length",
         "value": 5
+      }
+    ],
+    "commentedOut": [
+      {
+        "name": "snake",
+        "refName": "Snake#2"
+      },
+      {
+        "name": "snake",
+        "refClass": "ru.nsu.di_container.snakes.Snake"
+      }
+    ]
+  },{
+    "name": "Iguana",
+    "interfaceClass": "ru.nsu.di_container.snakes.Reptile",
+    "implementationClass": "ru.nsu.di_container.snakes.Lizard",
+    "scope": "Singleton",
+    "fields": [
+      {
+        "name": "name",
+        "value": "Eugene"
+      },
+      {
+        "name": "length",
+        "value": 7
       }
     ],
     "commentedOut": [
