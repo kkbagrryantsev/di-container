@@ -5,6 +5,9 @@ Minimalistic DI container based on the external JSON configuration
 
 ### Features
 
+**Support of cyclic dependencies** \
+No more need to use good code practices, now you can discover the power of cursed programming.
+
 **Direct access to values** \
 No need to interact with beans. Operate the container seamlessly.
 You need a minumum of configuration to bootstrap the work.
